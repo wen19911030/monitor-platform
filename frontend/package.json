@@ -1,0 +1,36 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@types/node-rsa": "^1.0.0",
+    "@types/nprogress": "0.0.29",
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
+    "element-ui": "^2.7.2",
+    "node-rsa": "^1.0.5",
+    "nprogress": "^0.2.0",
+    "raw-loader": "^2.0.0",
+    "vue": "^2.6.6",
+    "vue-router": "^3.0.2",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-plugin-typescript": "^3.5.0",
+    "@vue/cli-service": "^3.5.0",
+    "babel-plugin-component": "^1.1.1",
+    "compression-webpack-plugin": "^2.0.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.1.0",
+    "svgo-loader": "^2.2.0",
+    "typescript": "^3.2.1",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "vue-template-compiler": "^2.5.21"
+  }
+}

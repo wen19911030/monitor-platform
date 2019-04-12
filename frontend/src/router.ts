@@ -1,7 +1,8 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import Router, {Route} from 'vue-router';
 import 'nprogress/nprogress.css';
 import NProgress from 'nprogress';
+import store from './store';
 
 NProgress.configure({showSpinner: false});
 
@@ -30,7 +31,7 @@ const router = new Router({
           },
         },
         {
-          path: 'project/list',
+          path: '/project-list',
           name: 'project-list',
           component: () => import('@/views/project-list.vue'),
           meta: {
@@ -38,7 +39,7 @@ const router = new Router({
           },
         },
         {
-          path: 'project/create',
+          path: '/project-create',
           name: 'project-create',
           component: () => import('@/views/project-create.vue'),
           meta: {
@@ -46,11 +47,35 @@ const router = new Router({
           },
         },
         {
-          path: 'project/detail/:id',
+          path: '/project-detail/:id',
           name: 'project-detail',
           component: () => import('@/views/project-detail.vue'),
           meta: {
             crumbs: [{name: '', value: '项目详情'}],
+          },
+        },
+        {
+          path: '/upload-map/:id',
+          name: 'upload-map',
+          component: () => import('@/views/upload-map.vue'),
+          meta: {
+            crumbs: [{name: '', value: '项目详情'}],
+          },
+        },
+        {
+          path: '/error-list',
+          name: 'error-list',
+          component: () => import('@/views/error-list.vue'),
+          meta: {
+            crumbs: [{name: '', value: '错误列表'}],
+          },
+        },
+        {
+          path: '/error-detail/:pId/:logId',
+          name: 'error-detail',
+          component: () => import('@/views/error-detail.vue'),
+          meta: {
+            crumbs: [{name: '', value: '错误详情'}],
           },
         },
       ],
@@ -80,6 +105,37 @@ const router = new Router({
       redirect: '/404',
     },
   ],
+});
+
+function isLoginCB(to: Route, next: (parm?: any) => void) {
+  if (to.path === '/login') {
+    next({path: '/'});
+  } else {
+    next();
+  }
+  NProgress.done();
+}
+
+const whiteList = ['/login', '/register', '/find-password']; // 不重定向白名单
+router.beforeEach((to: Route, from: Route, next) => {
+  NProgress.start();
+  if (store.state.userInfo.username) {
+    isLoginCB(to, next);
+  } else {
+    store
+      .dispatch('GETINFO', 'needless')
+      .then(() => {
+        isLoginCB(to, next);
+      })
+      .catch(() => {
+        NProgress.done();
+        if (whiteList.includes(to.path)) {
+          next();
+        } else {
+          next('/login');
+        }
+      });
+  }
 });
 
 router.afterEach(() => {

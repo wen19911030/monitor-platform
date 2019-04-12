@@ -8,12 +8,12 @@
         <el-input v-model="createForm.name"></el-input>
       </el-form-item>
       <el-form-item label="项目描述">
-        <el-input type="textarea" v-model="createForm.desc"></el-input>
+        <el-input type="textarea" v-model="createForm.desc" :rows="4"></el-input>
       </el-form-item>
       <el-form-item label="项目类型">
         <el-radio-group v-model="createForm.type">
-          <el-radio label="public"></el-radio>
-          <el-radio label="private"></el-radio>
+          <el-radio label="public">公共</el-radio>
+          <el-radio label="private">私有</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item>
@@ -25,14 +25,16 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {createProject} from '../api/project';
+
 export default Vue.extend({
   name: 'project-create',
   data() {
     return {
       createForm: {
-        name: '',
-        desc: '',
-        type: '',
+        name: '决策工作台',
+        desc: '用来风控人员进行决策分析',
+        type: 'private',
       },
       rules: {
         name: [
@@ -57,7 +59,13 @@ export default Vue.extend({
       const ref: any = this.$refs.createForm;
       ref.validate((valid: boolean) => {
         if (valid) {
-          // TODO
+          createProject(this.createForm.name, this.createForm.desc, this.createForm.type)
+            .then((result: any) => {
+              console.log(result);
+            })
+            .catch((err: any) => {
+              console.log(err);
+            });
         } else {
           console.log('error submit!!');
           return false;
@@ -69,4 +77,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.el-form {
+  width: 450px;
+}
 </style>

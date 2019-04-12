@@ -14,9 +14,13 @@
           </template>
           <el-menu-item index="/user/change-password">修改密码</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/project/list">
+        <el-menu-item index="/project-list">
           <svg-icon name="project"></svg-icon>
           <span class="nav-stair-title" slot="title">项目管理</span>
+        </el-menu-item>
+        <el-menu-item index="/error-list">
+          <svg-icon name="monitor"></svg-icon>
+          <span class="nav-stair-title" slot="title">监控错误管理</span>
         </el-menu-item>
       </el-menu>
     </el-aside>

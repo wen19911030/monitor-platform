@@ -19,6 +19,11 @@ import {
   Card,
   Table,
   TableColumn,
+  Radio,
+  RadioGroup,
+  Upload,
+  Row,
+  Col,
 } from 'element-ui';
 
 Vue.use(Loading.directive);
@@ -36,7 +41,14 @@ Vue.use(Form)
   .use(Submenu)
   .use(MenuItem)
   .use(MenuItemGroup)
-  .use(Card).use(Table).use(TableColumn);
+  .use(Card)
+  .use(Table)
+  .use(TableColumn)
+  .use(Radio)
+  .use(RadioGroup)
+  .use(Upload)
+  .use(Row)
+  .use(Col);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$loading = Loading.service;

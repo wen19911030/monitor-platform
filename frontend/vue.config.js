@@ -9,7 +9,7 @@ module.exports = {
     proxy: {
       '/api': {
         // target: 'https://www.easy-mock.com/mock/58ff50c7739ac16852059d35/',
-        target: 'http://47.102.141.180:9999',
+        target: 'http://10.200.20.39:9999',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/api' //重写接口

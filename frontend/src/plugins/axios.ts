@@ -77,7 +77,7 @@ request.interceptors.response.use(
     handleResponseLoading();
     removePending(response.config);
     const res = response.data;
-    if (res.code !== 0) {
+    if (res.status !== 0) {
       // 不需要在拦截器提示的，params参数里有interceptorHint信息，且等于needless
       if (!(response.config.params && response.config.params.interceptorHint === 'needless')) {
         Message.warning(res.message);

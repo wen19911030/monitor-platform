@@ -12,6 +12,7 @@
     "@types/nprogress": "0.0.29",
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
+    "dayjs": "^1.8.12",
     "element-ui": "^2.7.2",
     "node-rsa": "^1.0.5",
     "nprogress": "^0.2.0",

@@ -21,8 +21,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
+import {findPassword} from '@/api/user.ts';
+
 export default Vue.extend({
   name: 'find-password',
   data() {
@@ -51,22 +53,22 @@ export default Vue.extend({
   methods: {
     handleFunc() {
       this.loading = true;
-      this.$refs.passwordForm.validate((valid) => {
+      const ref: any = this.$refs.passwordForm;
+      ref.validate((valid: boolean) => {
         console.log(valid);
         if (valid) {
           findPassword(this.passwordForm.username)
-            .then((result) => {
+            .then((result: any) => {
               this.loading = false;
               this.$message({
                 type: 'success',
                 message: result.message,
-                duration: 3 * 1000,
               });
               console.log(result);
             })
-            .catch((err) => {
-              this.loading = false;
+            .catch((err: any) => {
               console.log(err);
+              this.loading = false;
             });
         } else {
           console.log('error submit!!');

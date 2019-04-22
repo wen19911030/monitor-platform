@@ -2,7 +2,7 @@
   <el-card class="project-list">
     <div slot="header">
       <span class="card-name">项目管理</span>
-      <router-link class="el-button el-button--primary" to="/project/create">创建项目</router-link>
+      <router-link class="el-button el-button--primary" to="/project-create">创建项目</router-link>
     </div>
     <el-table :data="projectList" border style="width: 100%">
       <el-table-column prop="_id" label="ID" width="220">

@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import axios from 'axios';
-import {Message} from 'element-ui';
+import { Message } from 'element-ui';
 import store from '@/store.ts';
-import {list2, list3, list4} from '@/assets/js/connect.list.ts';
-import {__exportStar} from 'tslib';
+import { list2, list3, list4 } from '@/assets/js/connect.list.ts';
+import { __exportStar } from 'tslib';
 
 const baseURL: string = process.env.VUE_APP_API_ROOT || '';
 const reg = new RegExp(baseURL);
@@ -78,13 +78,18 @@ request.interceptors.response.use(
     removePending(response.config);
     const res = response.data;
     if (res.status !== 0) {
+      // 用户未登录
+      if (res.status === -1) {
+        Message.warning(res.message);
+        return Promise.reject(new Error('error'));
+      }
       // 不需要在拦截器提示的，params参数里有interceptorHint信息，且等于needless
       if (!(response.config.params && response.config.params.interceptorHint === 'needless')) {
         Message.warning(res.message);
       }
-      return Promise.reject('error');
+      return Promise.reject(new Error('error'));
     }
-    return res;
+    return res.data;
   },
   (error) => {
     if (axios.isCancel(error)) {

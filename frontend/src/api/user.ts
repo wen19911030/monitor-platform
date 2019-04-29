@@ -25,7 +25,7 @@ export function login(username: string, password: string) {
 }
 
 export function getInfo(interceptorHint: string) {
-  return axios({
+  return request({
     url: '/api/user/getInfo',
     method: 'get',
     params: {interceptorHint},

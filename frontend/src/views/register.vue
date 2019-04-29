@@ -108,7 +108,7 @@ export default Vue.extend({
           this.registerForm.userpwd = rsakey.encrypt(this.registerForm.password, 'base64');
           this.$store
             .dispatch('REGISTER', this.registerForm)
-            .then((result) => {
+            .then(() => {
               this.loading = false;
               this.$message({
                 type: 'success',

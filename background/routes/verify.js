@@ -9,19 +9,20 @@ router.get('/email/:username', (req, res) => {
   user
     .findOne({ username })
     .then((result) => {
+      console.log(result);
       if (result && result.username) {
         if (result.emailIsVerify) {
-          res.send(resDataFormat(0, 'email is verified'));
+          res.json(resDataFormat(0, {}, '邮箱验证成功'));
           return;
         }
         user.update(result.username, { emailIsVerify: true }).then(() => {
-          res.send(resDataFormat(0, 'email is verified'));
+          res.json(resDataFormat(0, {}, '邮箱验证成功'));
         });
       }
     })
     .catch((err) => {
       console.log(err);
-      res.send(resDataFormat(0, 'email is error'));
+      res.json(resDataFormat(0, {}, 'email is error'));
     });
 });
 

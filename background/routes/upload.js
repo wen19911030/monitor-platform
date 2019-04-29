@@ -1,6 +1,8 @@
 const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
+const { resDataFormat } = require('../assets/utils.js');
+const { checkLogin } = require('../middlewares/check');
 
 const router = express.Router();
 
@@ -50,21 +52,13 @@ function fileFilter(req, file, cb) {
 }
 const upload = multer({ storage, fileFilter });
 
-router.post('/jsmap', upload.single('file'), (req, res) => {
+router.post('/jsmap', checkLogin, upload.single('file'), (req, res) => {
   const { file } = req;
   if (file && file.size < 5 * 1024 * 1024) {
-    res.json({
-      status: 0,
-      message: '上传成功',
-      data: {},
-    });
+    res.json(resDataFormat(0));
   } else {
     fs.unlink(file.path);
-    res.json({
-      status: 1,
-      message: '上传失败',
-      data: {},
-    });
+    res.json(resDataFormat(1));
   }
 });
 

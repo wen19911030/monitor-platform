@@ -1,24 +1,26 @@
 const express = require('express');
 const project = require('../models/project.js');
 const { resDataFormat } = require('../assets/utils.js');
+const { checkLogin } = require('../middlewares/check');
 
 const router = express.Router();
 
-router.post('/create', (req, res) => {
+router.post('/create', checkLogin, (req, res) => {
   const {
-    projectName, projectDesc, projectType, creator,
+    projectName, projectDesc, projectType, creator, noticeType,
   } = req.body;
   project
-    .insert(projectName, projectDesc, projectType, creator)
+    .insert(projectName, projectDesc, projectType, creator, noticeType)
     .then((result) => {
-      res.send(resDataFormat(0, 'success', result));
+      res.json(resDataFormat(0, result));
     })
     .catch((err) => {
-      res.send(resDataFormat(1, err.message, {}));
+      console.log(err);
+      res.json(resDataFormat(1));
     });
 });
 
-router.post('/list', (req, res) => {
+router.post('/list', checkLogin, (req, res) => {
   const size = req.query.size || 20; // 分页参数
   let page = req.query.page || 1; // 当前页码
   // 条件查询参数
@@ -44,20 +46,15 @@ router.post('/list', (req, res) => {
     .then((result) => {
       console.log(result);
       project.findByPageSize(mp, size, page).then((docs) => {
-        res.json({
-          status: 0,
-          message: '请求成功',
+        res.json(resDataFormat(0, {
           total: result.length,
-          data: docs,
+          list: docs,
+        }));
+      })
+        .catch((err) => {
+          console.log(err);
+          res.json(resDataFormat(1));
         });
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({
-        status: 1,
-        message: '请求失败',
-      });
     });
 });
 

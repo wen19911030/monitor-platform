@@ -7,8 +7,8 @@ module.exports = {
   },
   mongodb: 'mongodb://127.0.0.1:27017/monitor',
   email: {
-    service: 'smtp.sina.com',
-    user: 'a15711658748@sina.com',
-    pass: 'jian-guo-wen',
+    service: '163',
+    user: 'anyijiandan@163.com',
+    code: 'WEN1991',
   },
 };

@@ -1,10 +1,10 @@
 import Vue from 'vue';
-import Router, {Route} from 'vue-router';
+import Router, { Route } from 'vue-router';
 import 'nprogress/nprogress.css';
 import NProgress from 'nprogress';
 import store from './store';
 
-NProgress.configure({showSpinner: false});
+NProgress.configure({ showSpinner: false });
 
 Vue.use(Router);
 
@@ -19,7 +19,7 @@ const router = new Router({
           name: 'home',
           component: () => import('@/views/home.vue'),
           meta: {
-            crumbs: [{name: 'home', value: '主页'}],
+            crumbs: [{ name: 'home', value: '主页' }],
           },
         },
         {
@@ -27,7 +27,7 @@ const router = new Router({
           name: 'change-password',
           component: () => import('@/views/change-password.vue'),
           meta: {
-            crumbs: [{name: '', value: '用户管理'}, {name: 'change-password', value: '修改密码'}],
+            crumbs: [{ name: '', value: '用户管理' }, { name: 'change-password', value: '修改密码' }],
           },
         },
         {
@@ -35,7 +35,7 @@ const router = new Router({
           name: 'project-list',
           component: () => import('@/views/project-list.vue'),
           meta: {
-            crumbs: [{name: '', value: '项目管理'}],
+            crumbs: [{ name: '', value: '项目管理' }],
           },
         },
         {
@@ -43,7 +43,7 @@ const router = new Router({
           name: 'project-create',
           component: () => import('@/views/project-create.vue'),
           meta: {
-            crumbs: [{name: '', value: '创建项目'}],
+            crumbs: [{ name: '', value: '创建项目' }],
           },
         },
         {
@@ -51,7 +51,7 @@ const router = new Router({
           name: 'project-detail',
           component: () => import('@/views/project-detail.vue'),
           meta: {
-            crumbs: [{name: '', value: '项目详情'}],
+            crumbs: [{ name: '', value: '项目详情' }],
           },
         },
         {
@@ -59,7 +59,7 @@ const router = new Router({
           name: 'upload-map',
           component: () => import('@/views/upload-map.vue'),
           meta: {
-            crumbs: [{name: '', value: '项目详情'}],
+            crumbs: [{ name: '', value: '项目详情' }],
           },
         },
         {
@@ -67,7 +67,7 @@ const router = new Router({
           name: 'error-list',
           component: () => import('@/views/error-list.vue'),
           meta: {
-            crumbs: [{name: '', value: '错误列表'}],
+            crumbs: [{ name: '', value: '错误列表' }],
           },
         },
         {
@@ -75,7 +75,7 @@ const router = new Router({
           name: 'error-detail',
           component: () => import('@/views/error-detail.vue'),
           meta: {
-            crumbs: [{name: '', value: '错误详情'}],
+            crumbs: [{ name: '', value: '错误详情' }],
           },
         },
       ],
@@ -107,34 +107,22 @@ const router = new Router({
   ],
 });
 
-function isLoginCB(to: Route, next: (parm?: any) => void) {
-  if (to.path === '/login') {
-    next({path: '/'});
-  } else {
-    next();
-  }
-  NProgress.done();
-}
-
 const whiteList = ['/login', '/register', '/find-password']; // 不重定向白名单
 router.beforeEach((to: Route, from: Route, next) => {
   NProgress.start();
   if (store.state.userInfo.username) {
-    isLoginCB(to, next);
+    next();
   } else {
-    store
-      .dispatch('GETINFO', 'needless')
-      .then(() => {
-        isLoginCB(to, next);
+    if (whiteList.includes(to.path)) {
+      next();
+    } else {
+      store.dispatch('GETINFO', 'needless').then(() => {
+        next();
       })
-      .catch(() => {
-        NProgress.done();
-        if (whiteList.includes(to.path)) {
-          next();
-        } else {
+        .catch(() => {
           next('/login');
-        }
-      });
+        });
+    }
   }
 });
 

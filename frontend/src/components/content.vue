@@ -29,17 +29,20 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item v-for="(item, index) in crumbs" :key="index" :to="{name: item.name}" :class="{'can-click': item.name && index !== crumbs.length - 1}">{{item.value}}</el-breadcrumb-item>
         </el-breadcrumb>
-        <ul class="pull-right">
-          <li>用户信息</li>
+        <ul class="flex-wrap">
           <li>
-            <router-link :to="{path: '/user/change-password'}" class="el-button el-button--text">修改密码</router-link>
+            <img src="../assets/images/icon-avator.png" alt="">
+            <el-dropdown trigger="click">
+            <div class="el-dropdown-link">
+              <span>欢迎您：{{userInfo.username}}</span> <i class="el-icon-arrow-down el-icon--right"></i>
+            </div>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item class="mid-flex"><router-link to="/user/change-password" tag="span">修改密码</router-link> </el-dropdown-item>
+              <el-dropdown-item class="mid-flex"><span @click.stop.prevent="whiteOff">注销</span> </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
           </li>
-          <li>
-            <el-button type="text" @click.stop.prevent="whiteOff">注销</el-button>
-          </li>
-          <li>
-            <el-button type="text" @click.stop.prevent="singout">退出账号</el-button>
-          </li>
+          <li @click.stop="singout"><img src="../assets/images/icon-off.png" alt=""></li>
         </ul>
       </el-header>
       <el-main class="main">
@@ -59,6 +62,11 @@ export default Vue.extend({
       crumbs: [],
     };
   },
+  computed: {
+    userInfo() {
+      return this.$store.state.userInfo;
+    },
+  },
   watch: {
     $route: {
       handler(to, from) {
@@ -70,14 +78,9 @@ export default Vue.extend({
   },
   methods: {
     singout() {
-      this.$store
-        .dispatch('LOGOUT')
-        .then((result) => {
-          this.$router.push({path: '/login'});
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.$store.dispatch('LOGOUT').finally(() => {
+        this.$router.replace('/login');
+      });
     },
     whiteOff() {
       this.$confirm('此操作将永久删除该账号, 是否继续?', '提示', {
@@ -92,11 +95,9 @@ export default Vue.extend({
               this.$store.commit('USERINFO', {});
               this.$router.push({path: '/login'});
             })
-            .catch((err) => {
-              console.log(err);
-            });
+            .catch(console.error);
         })
-        .catch((err) => console.log(err));
+        .catch(console.error);
     },
   },
 });
@@ -155,18 +156,58 @@ export default Vue.extend({
 }
 .header {
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   .el-breadcrumb {
     float: left;
     line-height: 60px;
   }
-  ul > li {
-    float: left;
-    color: #fff;
-    padding-right: 20px;
-    line-height: 60px;
+  ul {
+    height: 30px;
+    li {
+      float: left;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      &:first-child {
+        padding-right: 10px;
+        img {
+          width: 30px;
+          margin-right: 5px;
+        }
+      }
+      .el-dropdown {
+        color: #fff;
+        .el-dropdown-link {
+          cursor: pointer;
+        }
+      }
+      &:last-child {
+        cursor: pointer;
+        img {
+          width: 22px;
+        }
+      }
+      & + li {
+        padding-left: 10px;
+        &::before {
+          position: relative;
+          display: block;
+          content: '';
+          left: -10px;
+          // margin-left: -10px;
+          width: 1px;
+          height: 20px;
+          background: rgba(255, 255, 255, 0.7);
+        }
+        // border-left: 1px solid;
+      }
+    }
   }
 }
-.nav-stair-title{
+.nav-stair-title {
   padding-left: 10px;
 }
 </style>

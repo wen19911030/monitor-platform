@@ -32,12 +32,10 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         login(userInfo.username.trim(), userInfo.userpwd.trim())
           .then((result) => {
-            commit('UPDATE_USERINFO', result.data);
-            resolve(result);
+            commit('UPDATE_USERINFO', result);
+            resolve('ok');
           })
-          .catch((err) => {
-            reject(err);
-          });
+          .catch((err) => reject(err));
       });
     },
     REGISTER({commit}, userInfo) {
@@ -47,17 +45,15 @@ export default new Vuex.Store({
             commit('UPDATE_USERINFO', result.data);
             resolve(result);
           })
-          .catch((err) => {
-            reject(err);
-          });
+          .catch((err) => reject(err));
       });
     },
     GETINFO({commit}, flag) {
       return new Promise((resolve, reject) => {
         getInfo(flag)
-          .then(({data}) => {
-            if (data.status === 0) {
-              commit('UPDATE_USERINFO', data.data);
+          .then((data: any) => {
+            if (data.username) {
+              commit('UPDATE_USERINFO', data);
               resolve('ok');
             } else {
               reject(data);
@@ -69,9 +65,9 @@ export default new Vuex.Store({
     LOGOUT({commit}) {
       return new Promise((resolve, reject) => {
         logout()
-          .then((result) => {
+          .then(() => {
             commit('UPDATE_USERINFO', UserInfo);
-            resolve(result);
+            resolve('ok');
           })
           .catch((err) => reject(err));
       });

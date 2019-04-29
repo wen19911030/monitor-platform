@@ -33,13 +33,16 @@ import dayjs from 'dayjs';
 import {queryProjectList} from '../api/project';
 import {Project} from '../api/interface';
 
+const projectArr: Project[] = [];
+
 export default Vue.extend({
   name: 'home',
   data() {
     return {
-      projectList: [],
+      projectList: projectArr,
       page: 1,
       size: 20,
+      total: 0,
       projectType: '',
       projectName: '',
     };
@@ -51,8 +54,9 @@ export default Vue.extend({
     queryList() {
       queryProjectList(this.projectName, this.projectType, this.page, this.size)
         .then((result: any) => {
-          if (Array.isArray(result.data)) {
-            this.projectList = result.data.map((item: Project) => {
+          this.total = result.total || 0;
+          if (Array.isArray(result.list)) {
+            this.projectList = result.list.map((item: Project) => {
               item.createtime = dayjs(item.createtime).format('YYYY-MM-DD hh:MM:ss');
               return item;
             });

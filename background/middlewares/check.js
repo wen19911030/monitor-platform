@@ -4,7 +4,8 @@ module.exports = {
   checkLogin(req, res, next) {
     if (!req.session.user) {
       // 用户未登录，请重新登录
-      res.send(resDataFormat(1, 'not login'));
+      res.json(resDataFormat(-1));
+      return;
     }
     next();
   },
@@ -12,7 +13,8 @@ module.exports = {
   checkNotLogin(req, res, next) {
     if (req.session.user) {
       // 用户已登录
-      res.send(resDataFormat(0, 'success', getUserInfo(req.session.user)));
+      res.json(resDataFormat(0, getUserInfo(req.session.user)));
+      return;
     }
     next();
   },

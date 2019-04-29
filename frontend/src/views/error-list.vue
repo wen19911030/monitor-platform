@@ -37,17 +37,20 @@ import Vue from 'vue';
 import dayjs from 'dayjs';
 import {queryErrorList} from '../api/jserror';
 
+const errorArr: any[] = [];
+
 export default Vue.extend({
   name: 'error-list',
   data() {
     return {
-      errorList: [],
+      errorList: errorArr,
       startTime: '',
       endTime: '',
       projectId: '',
       errorType: '',
       page: 1,
       size: 20,
+      total: 0,
     };
   },
   created() {
@@ -57,8 +60,9 @@ export default Vue.extend({
     queryList() {
       queryErrorList(this.projectId, this.errorType, this.startTime, this.endTime, this.page, this.size)
         .then((result: any) => {
-          if (Array.isArray(result.data)) {
-            this.errorList = result.data.map((item: any) => {
+          if (Array.isArray(result.list)) {
+            this.total = result.total || 0;
+            this.errorList = result.list.map((item: any) => {
               item.createtime = dayjs(item.createtime).format('YYYY-MM-DD hh:MM:ss');
               item.happendTime = dayjs(item.happendTime).format('YYYY-MM-DD hh:MM:ss');
               return item;

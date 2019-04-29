@@ -2,10 +2,12 @@ const express = require('express');
 const jserror = require('../models/jserror.js');
 const analytics = require('../models/analytics.js');
 const project = require('../models/project.js');
+const { resDataFormat } = require('../assets/utils.js');
+const { checkLogin } = require('../middlewares/check');
 
 const router = express.Router();
 
-router.post('/list', (req, res) => {
+router.post('/list', checkLogin, (req, res) => {
   const size = req.query.size || 20; // 分页参数
   let page = req.query.page || 1; // 当前页码
   // 条件查询参数
@@ -25,26 +27,20 @@ router.post('/list', (req, res) => {
   jserror
     .find(mp)
     .then((result) => {
-      console.log(result);
       jserror.findByPageSize(mp, size, page).then((docs) => {
-        res.json({
-          status: 0,
-          message: '请求成功',
+        res.json(resDataFormat(0, {
           total: result.length,
-          data: docs,
-        });
+          list: docs,
+        }));
       });
     })
     .catch((err) => {
       console.log(err);
-      res.json({
-        status: 1,
-        message: '请求失败',
-      });
+      res.json(resDataFormat(1));
     });
 });
 
-router.get('/detail', (req, res) => {
+router.get('/detail', checkLogin, (req, res) => {
   const { logId, projectId } = req.query;
 
   Promise.all([
@@ -59,19 +55,11 @@ router.get('/detail', (req, res) => {
         error: results[0],
       };
 
-      res.json({
-        status: 0,
-        message: '请求成功',
-        data,
-      });
+      res.json(resDataFormat(0, data));
     })
     .catch((err) => {
       console.log(err);
-      res.json({
-        status: 1,
-        message: '请求失败',
-        data: err,
-      });
+      res.json(resDataFormat(1, err));
     });
 });
 

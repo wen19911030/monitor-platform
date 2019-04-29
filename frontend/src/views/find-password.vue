@@ -64,7 +64,6 @@ export default Vue.extend({
                 type: 'success',
                 message: result.message,
               });
-              console.log(result);
             })
             .catch((err: any) => {
               console.log(err);

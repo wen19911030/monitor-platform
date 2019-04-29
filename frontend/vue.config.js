@@ -1,5 +1,3 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const path = require('path');
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -21,25 +19,7 @@ module.exports = {
   configureWebpack: config => {
     // 为生产环境修改配置...
     if (isProd) {
-      config.plugins.push(
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            compress: {
-              warnings: false,
-              drop_console: false
-            }
-          },
-          sourceMap: true,
-          parallel: true
-        })
-      );
-      config.plugins.push(
-        new CompressionWebpackPlugin({
-          test: /\.js$|\.css$/,
-          threshold: 10240,
-          deleteOriginalAssets: false
-        })
-      );
+
     } else {
       // 为开发环境修改配置...
     }

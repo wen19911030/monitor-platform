@@ -1,11 +1,13 @@
+const { STATUS } = require('./status.js');
+
 /* eslint-disable func-names */
-exports.resDataFormat = function (status = 0, message = '', data = {}) {
-  const obj = {
+exports.resDataFormat = function (status = 0, data = {}, msg) {
+  const message = msg || STATUS[status];
+  return {
     status,
     message,
     data,
   };
-  return JSON.stringify(obj);
 };
 
 exports.getUserInfo = function (user = {}) {

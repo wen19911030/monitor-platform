@@ -31,14 +31,14 @@
       <section>
         <p>将下列代码复制到html文件中<span class="tips">最好放在&lt;/head&gt;标签上方</span></p>
         <pre><code>
-    &lt;script;&gt;
+    &lt;script&gt;
       var _waq = _waq || [];
-      _waq.push(['_setAccount', {{accountId}}]);
+      _waq.push(['_setAccount', '{{accountId}}']);
       (function () {
-        var w = document.createElement("script");
-        w.src = "http://47.102.141.180/sdk/waq.js";
+        var w = document.createElement('script');
+        w.src = 'http://47.102.141.180/sdk/waq.js';
         w.async = true;
-        var s = document.getElementsByTagName("script")[0];
+        var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(w, s);
       })();
     &lt;/script&gt;

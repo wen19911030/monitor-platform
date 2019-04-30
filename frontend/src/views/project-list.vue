@@ -64,7 +64,7 @@ export default Vue.extend({
             this.$message.warning('数据格式错误');
           }
         })
-        .catch((err: any) => console.log(err));
+        .catch(console.error);
     },
   },
 });

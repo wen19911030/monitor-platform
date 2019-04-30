@@ -41,3 +41,23 @@ export function queryProjectList(projectName: string, projectType: string, page 
     },
   });
 }
+
+export function queryProjectPerformance(projectId: string, startTime: string, endTime: string) {
+  return request({
+    method: 'post',
+    url: '/api/project/performance',
+    data: {
+      projectId, startTime, endTime,
+    },
+  });
+}
+
+export function queryProjectAnalytics(projectId: string, startTime: string, endTime: string) {
+  return request({
+    method: 'post',
+    url: '/api/project/analytics',
+    data: {
+      projectId, startTime, endTime,
+    },
+  });
+}

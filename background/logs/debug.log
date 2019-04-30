@@ -1,0 +1,134 @@
+2019-04-30T02:48:08.994Z 项目名称已存在
+2019-04-30T02:48:40.514Z 项目名称已存在
+2019-04-30T07:56:52.133Z uncaughtException: Unexpected token [
+C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\routes\project.js:84
+        obj[key] / result.length;
+           ^
+
+SyntaxError: Unexpected token [
+    at new Script (vm.js:79:7)
+    at createScript (vm.js:251:10)
+    at Object.runInThisContext (vm.js:303:10)
+    at Module._compile (internal/modules/cjs/loader.js:656:28)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+    at Module.require (internal/modules/cjs/loader.js:636:17)
+    at require (internal/modules/cjs/helpers.js:20:18)
+    at Object.<anonymous> (C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\app.js:51:23)
+    at Module._compile (internal/modules/cjs/loader.js:688:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+2019-04-30T07:56:57.956Z uncaughtException: Unexpected token ;
+C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\routes\project.js:84
+      key:  obj[key] / result.length;
+                                    ^
+
+SyntaxError: Unexpected token ;
+    at new Script (vm.js:79:7)
+    at createScript (vm.js:251:10)
+    at Object.runInThisContext (vm.js:303:10)
+    at Module._compile (internal/modules/cjs/loader.js:656:28)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+    at Module.require (internal/modules/cjs/loader.js:636:17)
+    at require (internal/modules/cjs/helpers.js:20:18)
+    at Object.<anonymous> (C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\app.js:51:23)
+    at Module._compile (internal/modules/cjs/loader.js:688:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+2019-04-30T07:57:01.893Z uncaughtException: Unexpected token ;
+C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\routes\project.js:84
+        key: obj[key] / result.length;
+                                     ^
+
+SyntaxError: Unexpected token ;
+    at new Script (vm.js:79:7)
+    at createScript (vm.js:251:10)
+    at Object.runInThisContext (vm.js:303:10)
+    at Module._compile (internal/modules/cjs/loader.js:656:28)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+    at Module.require (internal/modules/cjs/loader.js:636:17)
+    at require (internal/modules/cjs/helpers.js:20:18)
+    at Object.<anonymous> (C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\app.js:51:23)
+    at Module._compile (internal/modules/cjs/loader.js:688:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+2019-04-30T08:08:02.345Z uncaughtException: Unexpected token [
+C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\routes\project.js:84
+      data[key] = obj[key] / result.length;
+          ^
+
+SyntaxError: Unexpected token [
+    at new Script (vm.js:79:7)
+    at createScript (vm.js:251:10)
+    at Object.runInThisContext (vm.js:303:10)
+    at Module._compile (internal/modules/cjs/loader.js:656:28)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+    at Module.require (internal/modules/cjs/loader.js:636:17)
+    at require (internal/modules/cjs/helpers.js:20:18)
+    at Object.<anonymous> (C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\app.js:51:23)
+    at Module._compile (internal/modules/cjs/loader.js:688:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+2019-04-30T08:08:04.315Z uncaughtException: Unexpected token [
+C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\routes\project.js:84
+      data[key] = obj[key] / result.length;
+          ^
+
+SyntaxError: Unexpected token [
+    at new Script (vm.js:79:7)
+    at createScript (vm.js:251:10)
+    at Object.runInThisContext (vm.js:303:10)
+    at Module._compile (internal/modules/cjs/loader.js:656:28)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+    at Module.require (internal/modules/cjs/loader.js:636:17)
+    at require (internal/modules/cjs/helpers.js:20:18)
+    at Object.<anonymous> (C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\app.js:51:23)
+    at Module._compile (internal/modules/cjs/loader.js:688:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+2019-04-30T08:08:19.495Z uncaughtException: Unexpected token [
+C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\routes\project.js:84
+      data[key] = obj[key] / result.length;
+          ^
+
+SyntaxError: Unexpected token [
+    at new Script (vm.js:79:7)
+    at createScript (vm.js:251:10)
+    at Object.runInThisContext (vm.js:303:10)
+    at Module._compile (internal/modules/cjs/loader.js:656:28)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)
+    at Module.require (internal/modules/cjs/loader.js:636:17)
+    at require (internal/modules/cjs/helpers.js:20:18)
+    at Object.<anonymous> (C:\Users\jianguowen\Documents\GitHub\monitor-platform\background\app.js:51:23)
+    at Module._compile (internal/modules/cjs/loader.js:688:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:699:10)
+    at Module.load (internal/modules/cjs/loader.js:598:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:537:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:529:3)

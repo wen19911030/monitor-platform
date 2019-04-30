@@ -18,7 +18,8 @@ const AnalyticsSchema = new mongoose.Schema({
   r: { type: String }, // 随机字符串
   data: { type: Object }, // 埋点数据
   createtime: { type: Date }, // 创建时间
-  happenTime: { type: Number }, // 事件触发时间（时间戳）
+  happenTime: { type: String }, // 事件触发时间（时间戳）
+  ip: { type: String }, // 客服端IP
 });
 
 module.exports = AnalyticsSchema;

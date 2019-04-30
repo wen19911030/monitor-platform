@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const analytics = require('../models/analytics.js');
 const jserror = require('../models/jserror.js');
+const { log } = require('../config/winston');
 
 const router = express.Router();
 
@@ -15,21 +16,22 @@ function saveErrorLog(projectId, logId, happendTime, type, detail) {
   jserror
     .insert(projectId, logId, happendTime, type, detail)
     .then((result) => {
-      console.log(result);
+      log.info(result);
     })
     .catch((err) => {
-      console.log(err);
+      log.error(err);
     });
 }
 
 /* GET users listing. */
 router.get('/add', (req, res) => {
   const parsed = queryString.parse(`${req.url.split('?')[1]}`);
-  parsed.screenH = Number.parseInt(parsed.screenH, 10);
-  parsed.screenW = Number.parseInt(parsed.screenW, 10);
-  parsed.colorDepth = Number.parseInt(parsed.colorDepth, 10);
-  parsed.happenTime = Number.parseInt(parsed.happenTime, 10);
+  const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+  parsed.screenH = Number(parsed.screenH);
+  parsed.screenW = Number(parsed.screenW);
+  parsed.colorDepth = Number(parsed.colorDepth);
   parsed.data = JSON.parse(parsed.data);
+  parsed.ip = ip || ip[0];
 
   analytics
     .insert(parsed)
@@ -71,7 +73,8 @@ router.get('/add', (req, res) => {
         });
       }
     })
-    .catch(() => {
+    .catch((err) => {
+      log.error(err);
       res.send('error');
     });
 });

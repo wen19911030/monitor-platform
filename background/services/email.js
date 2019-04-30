@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const config = require('config-lite')(__dirname);
+const config = require('../config/index');
 
 const mailTransport = nodemailer.createTransport({
   // host: 'smtp.ethereal.email',

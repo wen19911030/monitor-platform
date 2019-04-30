@@ -1,7 +1,10 @@
 const express = require('express');
+const moment = require('moment');
 const project = require('../models/project.js');
-const { resDataFormat } = require('../assets/utils.js');
+const analytics = require('../models/analytics.js');
+const { resDataFormat, frequency } = require('../assets/utils.js');
 const { checkLogin } = require('../middlewares/check');
+const { log } = require('../config/winston');
 
 const router = express.Router();
 
@@ -15,7 +18,7 @@ router.post('/create', checkLogin, (req, res) => {
       res.json(resDataFormat(0, result));
     })
     .catch((err) => {
-      console.log(err);
+      log.error(err);
       res.json(resDataFormat(1));
     });
 });
@@ -44,7 +47,6 @@ router.post('/list', checkLogin, (req, res) => {
   project
     .find(mp)
     .then((result) => {
-      console.log(result);
       project.findByPageSize(mp, size, page).then((docs) => {
         res.json(resDataFormat(0, {
           total: result.length,
@@ -52,10 +54,71 @@ router.post('/list', checkLogin, (req, res) => {
         }));
       })
         .catch((err) => {
-          console.log(err);
+          log.error(err);
           res.json(resDataFormat(1));
         });
     });
+});
+
+router.post('/performance', checkLogin, (req, res) => {
+  const { projectId, startTime, endTime } = req.body;
+  const start = new Date(moment(startTime).startOf('day').toDate());
+  const end = new Date(moment(endTime).endOf('day').toDate());
+  analytics.find({
+    account: projectId,
+    'data.type': 'LOAD_PAGE',
+    'data.logInfo.loadType': 'load',
+    createtime: {
+      $gt: start, $lte: end,
+    },
+  }).then((result) => {
+    const obj = result.map(item => item.data.logInfo).reduce((pre, cur) => ({
+      lookupDomain: pre.lookupDomain + cur.lookupDomain,
+      connect: pre.connect + cur.connect,
+      request: pre.request + cur.request,
+      domReady: pre.domReady + cur.domReady,
+      loadEvent: pre.loadEvent + cur.loadEvent,
+      loadPage: pre.loadPage + cur.loadPage,
+    }));
+    const data = {};
+    Object.keys(obj).forEach((key) => {
+      data[key] = obj[key] / result.length;
+    });
+    res.json(resDataFormat(0, data));
+  }).catch((err) => {
+    log.error(err);
+    res.json(resDataFormat(1));
+  });
+});
+
+router.post('/analytics', (req, res) => {
+  const { projectId } = req.body;
+  const start = new Date(moment().startOf('day').toDate());
+  const end = new Date(moment().endOf('day').toDate());
+  analytics.find({
+    account: projectId,
+    'data.type': 'CUSTOMER_PV',
+    createtime: {
+      $gt: start, $lte: end,
+    },
+  }).then((result) => {
+    const pv = result.length;
+    const sessionIds = result.map(item => item.sessionId);
+    const ips = result.map(item => item.ip);
+    const uvList = frequency(sessionIds);
+    const ipList = frequency(ips);
+
+    const data = {
+      pv,
+      uv: uvList.length,
+      ip: ipList.length,
+    };
+
+    res.json(resDataFormat(0, data));
+  }).catch((err) => {
+    log.error(err);
+    res.json(resDataFormat(1));
+  });
 });
 
 module.exports = router;

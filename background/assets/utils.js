@@ -24,3 +24,18 @@ exports.getRandom = function (len = 8) {
   }
   return str;
 };
+
+exports.frequency = function (arr = []) {
+  const tuples = arr.map(item => [item, 1]);
+  for (let i = 0; i < tuples.length; i += 1) {
+    for (let j = i + 1; j < tuples.length; j += 1) {
+      if (tuples[i][0] === tuples[j][0]) {
+        tuples[i][1] += 1;
+      }
+    }
+  }
+  const filterArr = tuples
+    .filter((item, i) => arr.indexOf(item[0]) === i)
+    .sort((pre, cur) => pre[1] < cur[1]);
+  return filterArr;
+};

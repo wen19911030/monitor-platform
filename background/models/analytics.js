@@ -5,11 +5,23 @@ const analytics = mongoose.model('analytics', AnalyticsSchema);
 
 function findOne(conditions) {
   return new Promise((resolve, reject) => {
+    analytics.findOne(conditions, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+function find(conditions) {
+  return new Promise((resolve, reject) => {
     analytics.find(conditions, (err, res) => {
       if (err) {
         reject(err);
       } else {
-        resolve(res[0]);
+        resolve(res);
       }
     });
   });
@@ -17,7 +29,7 @@ function findOne(conditions) {
 
 function insert({
   screenH, screenW, colorDepth, lang, sessionId,
-  account, userId, happenTime, domain, url, title, referrer, data, r,
+  account, userId, happenTime, domain, url, title, referrer, data, r, ip,
 }) {
   const doc = {
     screenH,
@@ -34,6 +46,7 @@ function insert({
     referrer,
     data,
     r,
+    ip,
     createtime: Date.now(), // 创建时间
   };
   return new Promise((resolve, reject) => {
@@ -81,5 +94,6 @@ module.exports = {
   insert,
   update,
   findOne,
+  find,
   deletecollect,
 };

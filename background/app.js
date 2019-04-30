@@ -1,24 +1,15 @@
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const config = require('config-lite')(__dirname);
-const logger = require('morgan');
-const bodyParser = require('body-parser'); // 添加body解析
-const fs = require('fs');
-const path = require('path');
+const morgan = require('morgan');
+const createError = require('http-errors');
 
 const app = express();
+const { reqLog } = require('./config/winston');
+const config = require('./config/index');
 
-// log only 4xx and 5xx responses to console
-app.use(logger('dev', {
-  skip(req, res) { return res.statusCode < 400; },
-}));
-
-// log all requests to access.log
-app.use(logger('common', {
-  stream: fs.createWriteStream(path.join(__dirname, './logs/access.log'), { flags: 'a' }),
-}));
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // session 中间件
 app.use(
@@ -37,8 +28,23 @@ app.use(
   }),
 );
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+morgan.token('username', req => (req.session.user && req.session.user.username));
+morgan.token('params', (req) => {
+  if (req.method === 'GET') {
+    return JSON.stringify(req.query);
+  }
+  if (req.method === 'POST') {
+    return JSON.stringify(req.body);
+  }
+  return '';
+});
+
+morgan.format('info', '[info] :username :remote-addr ":method :url HTTP/:http-version" :status :params :res[content-length] ":referrer" ":user-agent"');
+
+// log all requests to access.log
+app.use(morgan('info', {
+  stream: reqLog.stream,
+}));
 
 // 导入路由
 const userRouter = require('./routes/user');
@@ -48,17 +54,30 @@ const analytics = require('./routes/analytics');
 const uploadRouter = require('./routes/upload');
 const verifyRouter = require('./routes/verify');
 
-app.use((req, res, next) => {
-  res.setHeader('Cache-Control', 'no-store');
-  next();
-});
-
 app.use('/api/user', userRouter);
 app.use('/api/project', projectRouter);
 app.use('/api/jserror', jserrorRouter);
 app.use('/api/upload', uploadRouter);
 app.use('/api/verify', verifyRouter);
 app.use('/jsSDKAnalytics', analytics);
+
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  next(createError(404));
+});
+
+// error handler
+app.use((err, req, res) => {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // add this line to include winston logging
+  reqLog.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
 
 app.listen(config.port, () => {
   console.log('node start');

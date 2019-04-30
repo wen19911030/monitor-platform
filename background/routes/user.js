@@ -1,7 +1,7 @@
 const express = require('express');
 const NodeRSA = require('node-rsa');
+const appRoot = require('app-root-path');
 const fs = require('fs');
-const path = require('path');
 
 const router = express.Router();
 const user = require('../models/user.js');
@@ -10,11 +10,14 @@ const sendMail = require('../services/email.js');
 
 const { checkLogin } = require('../middlewares/check');
 
-// esa加密
+// rsa加密
 let rsaPubKey = null;
-fs.readFile(path.join(__dirname, '../assets/rsa_1024_pub.pem'), (err, data) => {
+fs.readFile(`${appRoot}/assets/rsa_1024_pub.pem`, (
+  err,
+  data,
+) => {
   if (err) {
-    return console.error(err);
+    console.error(err);
   }
   const pubKey = data.toString();
   rsaPubKey = new NodeRSA(pubKey);
@@ -23,7 +26,7 @@ fs.readFile(path.join(__dirname, '../assets/rsa_1024_pub.pem'), (err, data) => {
 
 // rsa解密
 let rsaPrivKey = null;
-fs.readFile(path.join(__dirname, '../assets/rsa_1024_priv.pem'), (
+fs.readFile(`${appRoot}/assets/rsa_1024_priv.pem`, (
   err,
   data,
 ) => {
@@ -40,7 +43,6 @@ router.post('/register', (req, res) => {
     .insert(req.body.username, req.body.password, req.body.email)
     .then((result) => {
       // TODO 发送验证邮件
-      console.log(result);
       sendMail(
         result.email,
         '验证邮件',
